@@ -1,5 +1,7 @@
 package com.mygdx.game;
+
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.files.FileHandle;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -10,11 +12,12 @@ import java.io.ObjectOutputStream;
 public class Save {
 
     public static GameData gd;
+    public static FileHandle fl = Gdx.files.internal("highscores.sav");
 
     public static void save() {
         try {
             ObjectOutputStream out = new ObjectOutputStream(
-                    new FileOutputStream("highscores.sav")
+                    new FileOutputStream("/sdcard/highscores.sav")
             );
             out.writeObject(gd);
             out.close();
@@ -32,7 +35,7 @@ public class Save {
                 return;
             }
             ObjectInputStream in = new ObjectInputStream(
-                    new FileInputStream("highscores.sav")
+                    new FileInputStream("/sdcard/highscores.sav")
             );
             gd = (GameData) in.readObject();
             in.close();
@@ -44,7 +47,7 @@ public class Save {
     }
 
     public static boolean saveFileExists() {
-        File f = new File("highscores.sav");
+        File f = new File("/sdcard/highscores.sav");
         return f.exists();
     }
 
